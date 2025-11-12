@@ -1,6 +1,11 @@
+---
+
+## 📜 cdiscount-order-tools.user.js
+
+```javascript
 // ==UserScript==
 // @name         Cdiscount 订单工具
-// @namespace    https://github.com/dwzrlp/tampermonkey-cdiscount-order-tools
+// @namespace    https://github.com/dwzrlp/cdiscount-order-tools
 // @version      1.6.1
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
@@ -8,14 +13,13 @@
 // @match        *://*.cdiscount.com/*
 // @run-at       document-idle
 // @grant        GM_addStyle
-// @updateURL    https://raw.githubusercontent.com/dwzrlp/tampermonkey-cdiscount-order-tools/main/cdiscount-order-tools.user.js
-// @downloadURL  https://raw.githubusercontent.com/dwzrlp/tampermonkey-cdiscount-order-tools/main/cdiscount-order-tools.user.js
+// @updateURL    https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
+// @downloadURL  https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
 // ==/UserScript==
 
 (function () {
   "use strict";
 
-  // ---- 多语言文本 ----
   const I18N = {
     fr: {
       btnChange: "Changer prix",
@@ -53,7 +57,6 @@
   const LANG = detectLang();
   const T = I18N[LANG] || I18N.en;
 
-  // —— 样式 —— //
   GM_addStyle(`
     .cd-btn-container {
       display: flex;
@@ -118,9 +121,7 @@
         const montant = prompt(T.prompt);
         if (!montant) return;
         let normalized = montant.trim();
-        if (/^\d+(\.\d{2})$/.test(normalized)) {
-          normalized = normalized.replace(".", ",");
-        }
+        if (/^\d+(\.\d{2})$/.test(normalized)) normalized = normalized.replace(".", ",");
         headerLeft.innerHTML = headerLeft.innerHTML.replace(
           /[\d\s]+,[\d]{2}\s*€|[\d\s]+\.[\d]{2}\s*€/,
           `${normalized} €`
@@ -141,7 +142,6 @@
       buttonsRow.appendChild(btnEffacer);
       btnContainer.appendChild(buttonsRow);
       btnContainer.appendChild(warning);
-
       innerDiv.insertBefore(btnContainer, innerDiv.firstChild);
     });
   }
