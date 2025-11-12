@@ -24,13 +24,13 @@
 
 ## 🧩 安装方法
 
-1. 确保已安装浏览器扩展 [Tampermonkey](https://www.tampermonkey.net/)
+1. 安装浏览器扩展 [Tampermonkey](https://www.tampermonkey.net/)
 2. 点击下方链接安装脚本：
 
-   👉 [点击安装脚本](https://raw.githubusercontent.com/dwzrlp/tampermonkey-cdiscount-order-tools/main/cdiscount-order-tools.user.js)
+   👉 [点击安装脚本](https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js)
 
-3. 打开 Cdiscount 网站的订单页面（如 `https://www.cdiscount.com/account/orderlist.html`）
-4. 脚本会自动在每个订单信息上方插入操作栏。
+3. 打开 Cdiscount 网站订单页（如 `https://www.cdiscount.com/account/orderlist.html`）
+4. 脚本自动在订单信息上方插入操作栏。
 
 ---
 
@@ -56,8 +56,8 @@
 
 ## 🔄 自动更新机制
 
-Tampermonkey 会定期访问以下地址检测更新：
+Tampermonkey 每隔数天自动访问以下地址检测更新：
 
 ```text
-@updateURL    https://raw.githubusercontent.com/dwzrlp/tampermonkey-cdiscount-order-tools/main/cdiscount-order-tools.user.js
-@downloadURL  https://raw.githubusercontent.com/dwzrlp/tampermonkey-cdiscount-order-tools/main/cdiscount-order-tools.user.js
+@updateURL    https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
+@downloadURL  https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
