@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
-// @version      1.6.3
+// @version      1.6.4
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
 // @match        *://*.cdiscount.fr/*
@@ -120,23 +120,38 @@
       btnModifier.className = "cd-btn cd-btn-modifier";
       btnModifier.textContent = T.btnChange;
       btnModifier.addEventListener("click", () => {
-        const headerLeft = cmdRecap.querySelector(".czOrderHeaderBlocLeft");
-        if (!headerLeft) return;
-        const montant = prompt(T.prompt);
-        if (!montant) return;
-        let normalized = montant.trim();
-        if (/^\d+(\.\d{2})$/.test(normalized)) normalized = normalized.replace(".", ",");
-        for (const node of headerLeft.childNodes) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                const trimmed = node.textContent.trim();
-                if (trimmed.length > 0) {
-                    node.textContent = `${T.payePar}`
-                    node.textContent = node.textContent.replace(
-                        /[\d\s]+,[\d]{2}\s*|[\d\s]+\.[\d]{2}\s*/,
-          `${normalized} `);
-                }
-            }
-        }
+          const headerLeft = cmdRecap.querySelector(".czOrderHeaderBlocLeft");
+          if (!headerLeft) return;
+
+          const montant = prompt(T.prompt);
+          if (!montant) return;
+
+          let normalized = montant.trim(); // unifie la saisie
+          let numeric = parseFloat(normalized);
+
+          if (isNaN(numeric)) {
+              alert("Veuillez entrer un nombre valide.");
+              return;
+          }
+
+          // Formate toujours avec 2 décimales et une virgule
+          normalized = numeric.toFixed(2);
+
+          if(LANG == 'fr'){
+              normalized = normalized.replace('.',',');
+          }
+
+          for (const node of headerLeft.childNodes) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                  const trimmed = node.textContent.trim();
+                  if (trimmed.length > 0) {
+                      node.textContent = node.textContent.replace(
+                          /[\d\s]+,[\d]{2}\s*|[\d\s]+\.[\d]{2}\s*/,
+                          `${normalized} `
+                      );
+                  }
+              }
+          }
       });
 
       const btnEffacer = document.createElement("div");
