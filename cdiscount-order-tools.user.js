@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
-// @version      1.6.4
+// @version      1.6.5
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
 // @match        *://*.cdiscount.fr/*
@@ -126,7 +126,7 @@
           const montant = prompt(T.prompt);
           if (!montant) return;
 
-          let normalized = montant.trim(); // unifie la saisie
+          let normalized = montant.trim().replace(",", "."); // unifie la saisie
           let numeric = parseFloat(normalized);
 
           if (isNaN(numeric)) {
