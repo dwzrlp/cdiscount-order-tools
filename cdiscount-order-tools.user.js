@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
-// @version      1.6.1
+// @version      1.6.3
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
 // @match        *://*.cdiscount.fr/*
@@ -39,18 +39,24 @@
     },
   };
 
-  function detectLang() {
-    const htmlLang = (document.documentElement.lang || "").toLowerCase();
-    if (htmlLang.startsWith("fr")) return "fr";
-    if (htmlLang.startsWith("zh")) return "zh";
-    if (htmlLang.startsWith("en")) return "en";
-    const host = location.hostname;
-    if (host.endsWith(".fr")) return "fr";
-    const nav = (navigator.language || "").toLowerCase();
-    if (nav.startsWith("fr")) return "fr";
-    if (nav.startsWith("zh")) return "zh";
-    return "en";
-  }
+    function detectLang() {
+        // 1️⃣ 先看浏览器语言（最符合“用户自己的语言习惯”）
+        const nav = (navigator.language || navigator.userLanguage || "").toLowerCase();
+        if (nav.startsWith("zh")) return "zh";
+        if (nav.startsWith("fr")) return "fr";
+        if (nav.startsWith("en")) return "en";
+
+        // 2️⃣ 再看页面 <html lang="...">
+        const htmlLang = (document.documentElement.lang || "").toLowerCase();
+        if (htmlLang.startsWith("zh")) return "zh";
+        if (htmlLang.startsWith("fr")) return "fr";
+        if (htmlLang.startsWith("en")) return "en";
+
+        // 3️⃣ 最后才按域名猜
+        const host = location.hostname.toLowerCase();
+        if (host.endsWith(".fr")) return "fr";
+        return "en"; // 默认英文
+    }
 
   const LANG = detectLang();
   const T = I18N[LANG] || I18N.en;
@@ -127,7 +133,7 @@
                     node.textContent = `${T.payePar}`
                     node.textContent = node.textContent.replace(
                         /[\d\s]+,[\d]{2}\s*|[\d\s]+\.[\d]{2}\s*/,
-          `${normalized}`);
+          `${normalized} `);
                 }
             }
         }
