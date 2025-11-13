@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
-// @version      1.6.6
+// @version      1.6.7
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
 // @match        *://*.cdiscount.fr/*
 // @match        *://*.cdiscount.com/*
 // @run-at       document-idle
 // @grant        GM_addStyle
+// @icon         https://www.cdiscount.com/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
 // @downloadURL  https://raw.githubusercontent.com/dwzrlp/cdiscount-order-tools/main/cdiscount-order-tools.user.js
 // ==/UserScript==
