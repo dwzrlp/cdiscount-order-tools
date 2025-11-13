@@ -21,18 +21,21 @@
       btnErase: "Effacer adresse",
       prompt: "Nouveau montant payé (ex: 18,99) :",
       warn: "⚠️ Attention de ne pas mettre cette partie dans la capture de commande",
+      payePar: "0.00 € payé par Carte Bancaire avec 3D-Secure",
     },
     en: {
       btnChange: "Change price",
       btnErase: "Remove address",
       prompt: "New paid amount (e.g. 18.99 or 18,99):",
       warn: "⚠️ Do NOT include this area in your order screenshot",
+      payePar: "0.00 € paid by credit card with 3D-Secure",
     },
     zh: {
       btnChange: "修改金额",
       btnErase: "隐藏地址",
       prompt: "请输入新金额（例如：18,99 或 18.99）：",
       warn: "⚠️ 下单凭证截图请勿包含此区域",
+      payePar: "使用信用卡通过 3D 安全验证支付 0.00 欧元",
     },
   };
 
@@ -117,10 +120,17 @@
         if (!montant) return;
         let normalized = montant.trim();
         if (/^\d+(\.\d{2})$/.test(normalized)) normalized = normalized.replace(".", ",");
-        headerLeft.innerHTML = headerLeft.innerHTML.replace(
-          /[\d\s]+,[\d]{2}\s*€|[\d\s]+\.[\d]{2}\s*€/,
-          `${normalized} €`
-        );
+        for (const node of headerLeft.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const trimmed = node.textContent.trim();
+                if (trimmed.length > 0) {
+                    node.textContent = `${T.payePar}`
+                    node.textContent = node.textContent.replace(
+                        /[\d\s]+,[\d]{2}\s*|[\d\s]+\.[\d]{2}\s*/,
+          `${normalized}`);
+                }
+            }
+        }
       });
 
       const btnEffacer = document.createElement("div");
