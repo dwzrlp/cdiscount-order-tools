@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
-// @version      1.6.5
+// @version      1.6.6
 // @description  在订单页面添加改价与隐藏地址按钮，附带截图提醒（中/英/法自动切换）。
 // @author       HyperNovaSigma
 // @match        *://*.cdiscount.fr/*
@@ -160,8 +160,17 @@
       btnEffacer.addEventListener("click", () => {
         const detailBloc = cmdRecap.nextElementSibling;
         if (!detailBloc) return;
-        const deliveryBloc = detailBloc.querySelector(".czOrderDeliveryBloc");
-        if (deliveryBloc) deliveryBloc.remove();
+        const deliveryBloc = detailBloc.querySelector(".czOrderDeliveryBloc .hidethis");
+
+          if (deliveryBloc) {
+              // On parcourt tous les enfants directs du bloc
+              for (const node of [...deliveryBloc.childNodes]) {
+                  // Supprimer uniquement les nœuds texte (hors balises)
+                  if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) {
+                      node.remove();
+                  }
+              }
+          }
       });
 
       buttonsRow.appendChild(btnModifier);
