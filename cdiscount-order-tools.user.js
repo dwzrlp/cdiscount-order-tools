@@ -1,8 +1,3 @@
----
-
-## 📜 cdiscount-order-tools.user.js
-
-```javascript
 // ==UserScript==
 // @name         Cdiscount 订单工具
 // @namespace    https://github.com/dwzrlp/cdiscount-order-tools
